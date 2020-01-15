@@ -25,7 +25,7 @@ Once you have installed the required dependencies, you will need to take a few s
 ## Testing
 
 1. To run a single job, simply type: 
-   <br/> `fab localhost localhost mogp:demo`
+   <br/> `fab localhost mogp:demo`
 2. You can copy back any results from completed runs using:
    <br/> `fab localhost fetch_results`
    <br/> The results will then be in a directory inside `(FabSim3 Home)/results`, which is most likely called `demo_localhost_16`
