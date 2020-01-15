@@ -9,7 +9,7 @@ This is a mogp (Multi-Output Gaussian Process Emulator) plugin for [FabSim3](htt
 
 
 ## Installation
-Simply type `fabsim localhost install_plugin:fabmogp` anywhere inside your FabSim3 install directory.
+Simply type `fab localhost install_plugin:fabmogp` anywhere inside your FabSim3 install directory.
 
 ### FabSim3 Configuration
 Once you have installed the required dependencies, you will need to take a few small configuration steps:
@@ -25,7 +25,7 @@ Once you have installed the required dependencies, you will need to take a few s
 ## Testing
 
 1. To run a single job, simply type: 
-   <br/> `fab localhost mogp:demo`
+   <br/> `fab localhost mogp:demo,sample_points=10`
 2. You can copy back any results from completed runs using:
    <br/> `fab localhost fetch_results`
    <br/> The results will then be in a directory inside `(FabSim3 Home)/results`, which is most likely called `demo_localhost_16`
