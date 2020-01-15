@@ -115,9 +115,6 @@ if __name__ == "__main__":
             print("Error : input sample points should be integer value !")
             exit()
 
-        print("\n\t\tmood = " + mood + '\t' + str(type(mood)))
-        print("\t\tsample_points = " + str(sample_points) +
-              '\t' + str(type(sample_points)))
         run_mogp_simulation(sample_points, mpi_exec,
                             fdfault_exec, results_dir)
     elif mood == "analysis":
