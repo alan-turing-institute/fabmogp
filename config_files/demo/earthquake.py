@@ -132,8 +132,8 @@ def run_simulation(name="rough_example",
     """
     launches problem with specified number of processes
     """
-    subprocess.run([mpi_exec, "-n", str(int(n_proc)), "fdfault",
-                    output_dir + "/problems/" + name + ".in"],
+    subprocess.run([mpi_exec, "--allow-run-as-root", "-n", str(int(n_proc)),
+                    "fdfault", output_dir + "/problems/" + name + ".in"],
                    cwd=fdfault_exec)
 
 
