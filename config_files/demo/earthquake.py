@@ -145,7 +145,6 @@ def compute_moment(name="rough_example",
     """
 
     datadir = join(results_dir, "data")
-    print(datadir)
     U = fdfault.analysis.output(name, outname, datadir)
     U.load()
 

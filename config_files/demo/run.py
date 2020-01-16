@@ -4,17 +4,25 @@ import mogp_emulator
 from earthquake import create_problem, run_simulation, compute_moment
 import sys
 from pprint import pprint
-from os.path import join
+from os.path import join, dirname, exists
+from os import walk, makedirs
+try:
+    import cPickle as pickle
+except ModuleNotFoundError:
+    import pickle
 
-ed = mogp_emulator.LatinHypercubeDesign(
-    [(-120., -80.), (0.1, 0.4), (0.9, 1.1)])
 
+def run_mogp_simulation(mpi_exec, fdfault_exec, results_dir):
 
-def run_mogp_simulation(sample_points, mpi_exec, fdfault_exec, results_dir):
-
-    # We can now generate a design of sample_points by calling the sample
     np.random.seed(157374)
-    input_points = ed.sample(sample_points)
+
+    input_points = np.load(join(results_dir, "input_points.npy"))
+
+    if np.ndim(input_points) == 1:
+        input_points = np.array([input_points])
+
+    with open(join(results_dir, "ed.pickle"), 'rb') as input:
+        ed = pickle.load(input)
 
     # Now we can actually run the simulations. First, we feed the input points
     # to create_problem to write the input files, call run_simulation to
@@ -36,17 +44,26 @@ def run_mogp_simulation(sample_points, mpi_exec, fdfault_exec, results_dir):
 
 def run_mogp_analysis(mpi_exec, fdfault_exec, results_dir):
 
-    input_points = np.load(join(results_dir, "input_points.npy"))
+    np.random.seed(157374)
 
+    ed = None
+    input_points = []
     results = []
-    counter = 1
+    # walk through all files in results_dir
+    for r, d, f in walk(results_dir):
+        # r=root, d=directories, f = files
+        for file in f:
+            if file == 'simulation_1.in':
+                result = compute_moment(
+                    name="simulation_1", results_dir=dirname(r))
+                results.append(result)
+            elif file == 'input_points.npy':
+                input_points.append(np.load(join(r, file))[0])
+            elif file == "ed.pickle" and ed is None:
+                with open(join(r, file), 'rb') as input:
+                    ed = pickle.load(input)
 
-    for point in input_points:
-        name = "simulation_{}".format(counter)
-        result = compute_moment(name=name, results_dir=results_dir)
-        results.append(result)
-        counter += 1
-
+    input_points = np.array(input_points)
     results = np.array(results)
 
     # Now fit a Gaussian Process to the input_points and results to fit the
@@ -66,6 +83,11 @@ def run_mogp_analysis(mpi_exec, fdfault_exec, results_dir):
     # Since I don't have an actual observation to use, I will do a synthetic
     # test by running an additional point so I can evaluate the results from
     # the known inputs.
+    if not exists(join(results_dir, "data")):
+        makedirs(join(results_dir, "data"))
+    if not exists(join(results_dir, "problems")):
+        makedirs(join(results_dir, "problems"))
+
     known_input = ed.sample(1)
     name = "known_value"
     create_problem(known_input[0], name=name, output_dir=results_dir)
@@ -115,8 +137,7 @@ if __name__ == "__main__":
             print("Error : input sample points should be integer value !")
             exit()
 
-        run_mogp_simulation(sample_points, mpi_exec,
-                            fdfault_exec, results_dir)
+        run_mogp_simulation(mpi_exec, fdfault_exec, results_dir)
     elif mood == "analysis":
         mpi_exec = sys.argv[2]
         fdfault_exec = sys.argv[3]
