@@ -30,15 +30,7 @@ Once you have installed the required dependencies, you will need to take a few s
 2. To run the ensemble, you can type, simply type: 
    <br/> `fab localhost mogp_ensemble:demo,sample_points=20`
 3. You can copy back any results from completed runs using:
-=======
-   <br/> `fab localhost mogp:demo,sample_points=10`
-2. You can copy back any results from completed runs using:
->>>>>>> c4aadb2e74f99476b258c4764d056eb888ef657e
    <br/> `fab localhost fetch_results`
    <br/> The results will then be in a directory inside `(FabSim3 Home)/results`, which is most likely called `demo_localhost_16`
 4. You can analysis the simulation output using:
    <br/> `fab localhost mogp_analysis:demo,demo_localhost_16`
-
-
-
-   
