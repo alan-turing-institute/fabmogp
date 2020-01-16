@@ -25,7 +25,6 @@ Once you have installed the required dependencies, you will need to take a few s
 ## Testing
 
 1. To run a single job, simply type: 
-<<<<<<< HEAD
    <br/> `fab localhost localhost mogp:demo`
 2. To run the ensemble, you can type, simply type: 
    <br/> `fab localhost mogp_ensemble:demo,sample_points=20`
