@@ -25,7 +25,7 @@ def mogp(config, **args):
     if (hasattr(env, 'sample_points') == False):
         env.sample_points = 1
 
-    local("python3 %s/initi_config.py --sample_points %s --results_dir %s " %
+    local("python3 %s/init_config.py --sample_points %s --results_dir %s " %
           (env.job_config_path_local,
            env.sample_points,
            env.job_config_path_local)
@@ -57,7 +57,7 @@ def mogp_ensemble(config, sample_points=1, script='mogp', **args):
         folder_name = "sample_point_" + str(i)
         local("mkdir -p %s/%s" % (sweep_dir, folder_name))
 
-    local("python3 %s/initi_config.py --sample_points %s --results_dir %s --isSWEEP True" %
+    local("python3 %s/init_config.py --sample_points %s --results_dir %s --isSWEEP True" %
           (env.job_config_path_local,
            env.sample_points,
            env.job_config_path_local)
