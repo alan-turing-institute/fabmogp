@@ -1,5 +1,5 @@
 # fabmogp
-This is a mogp (Multi-Output Gaussian Process Emulator) plugin for [FabSim3](https://github.com/djgroen/FabSim3.git)
+This is a mogp (Multi-Output Gaussian Process Emulator) plugin for [FabSim3](https://github.com/djgroen/FabSim3.git).
 
 ## Dependencies:
 
