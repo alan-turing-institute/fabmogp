@@ -11,10 +11,6 @@ This is a mogp (Multi-Output Gaussian Process Emulator) plugin for [FabSim3](htt
 ## Installation
 Simply type `fab localhost install_plugin:fabmogp` anywhere inside your FabSim3 install directory.
 
-To use the plugin, you also need to set two environment variables in machines\_user.yml:
-1. `$mpi\_exec`, which should point to your mpiexec executable in your MPI installation of the respective machine.
-2. `$fdfault\_exec`, which should point to your fdfault executable in your respective machine.
-
 ### FabSim3 Configuration
 Once you have installed the required dependencies, you will need to take a few small configuration steps:
 1. Go to `(FabSim Home)/deploy`
