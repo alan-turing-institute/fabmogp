@@ -7,4 +7,4 @@ $run_prefix
 
 /usr/bin/env > env.log
 
-python3 run.py $mood $mpi_exec $fdfault_exec $job_results $sample_points  
+python3 mogp_functions.py $mood $mpi_exec $fdfault_exec $job_results $sample_points
