@@ -25,11 +25,16 @@ def mogp(config, **args):
     if (hasattr(env, 'sample_points') == False):
         env.sample_points = 1
 
-    local("python3 %s/init_config.py --sample_points %s --results_dir %s " %
-          (env.job_config_path_local,
-           env.sample_points,
-           env.job_config_path_local)
-          )
+    #local("python3 %s/init_config.py --sample_points %s --results_dir %s " %
+    #      (env.job_config_path_local,
+    #       env.sample_points,
+    #       env.job_config_path_local)
+    #      )
+    import init_config
+    mogp_configuration_initialization(env.sample_points,
+                                      env.job_config_path_local,
+                                      False)
+
     execute(put_configs, config)
 
     job(dict(script='mogp'), args)
@@ -57,11 +62,16 @@ def mogp_ensemble(config, sample_points=1, script='mogp', **args):
         folder_name = "sample_point_" + str(i)
         local("mkdir -p %s/%s" % (sweep_dir, folder_name))
 
-    local("python3 %s/init_config.py --sample_points %s --results_dir %s --isSWEEP True" %
-          (env.job_config_path_local,
-           env.sample_points,
-           env.job_config_path_local)
-          )
+    #local("python3 %s/init_config.py --sample_points %s --results_dir %s --isSWEEP True" %
+    #      (env.job_config_path_local,
+    #       env.sample_points,
+    #       env.job_config_path_local)
+    #      )
+
+    import init_config
+    mogp_configuration_initialization(env.sample_points,
+                                      env.job_config_path_local,
+                                      False)
 
     run_ensemble(config, sweep_dir, **args)
 
@@ -77,7 +87,10 @@ def mogp_analysis(config, results_dir):
     with_config(config)
     env.mood = "run_simulation"
 
-    local("python3 %s/run.py analysis %s  %s  %s/%s " %
-          (env.job_config_path_local,
-           env.mpi_exec, env.fdfault_exec,
-           env.local_results, results_dir))
+    #local("python3 %s/run.py analysis %s  %s  %s/%s " %
+    #      (env.job_config_path_local,
+    #       env.mpi_exec, env.fdfault_exec,
+    #       env.local_results, results_dir))
+
+    import run
+    run_mogp_analysis(env.mpi_exec, env.fdfault_exec, "{}/{}".format(env.local_results,results_dir))
