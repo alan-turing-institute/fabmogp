@@ -30,7 +30,7 @@ def mogp(config, **args):
     #       env.sample_points,
     #       env.job_config_path_local)
     #      )
-    import .init_config
+    from .init_config import mogp_configuration_initialization
     mogp_configuration_initialization(env.sample_points,
                                       env.job_config_path_local,
                                       False)
@@ -68,7 +68,7 @@ def mogp_ensemble(config, sample_points=1, script='mogp', **args):
     #       env.job_config_path_local)
     #      )
 
-    import .init_config
+    from .init_config import mogp_configuration_initialization
     mogp_configuration_initialization(env.sample_points,
                                       env.job_config_path_local,
                                       False)
@@ -92,5 +92,5 @@ def mogp_analysis(config, results_dir):
     #       env.mpi_exec, env.fdfault_exec,
     #       env.local_results, results_dir))
 
-    import .run
+    from .run import run_mogp_analysis
     run_mogp_analysis(env.mpi_exec, env.fdfault_exec, "{}/{}".format(env.local_results,results_dir))
