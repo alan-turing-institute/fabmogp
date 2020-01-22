@@ -64,7 +64,7 @@ def load_results(results_dir):
 
     return input_points, results, ed
 
-def run_mogp_analysis(analysis_points, known_value, threshold, results_dir):
+def run_mogp_analysis(analysis_samples, known_value, threshold, results_dir):
 
     input_points, results, ed = load_results(results_dir)
 
@@ -76,8 +76,8 @@ def run_mogp_analysis(analysis_points, known_value, threshold, results_dir):
     # We can now make predictions for a large number of input points much
     # more quickly than running the simulation.
 
-    query_points = ed.sample(analysis_points)
-    predictions = gp.predict(query_points)
+    analysis_points = ed.sample(analysis_samples)
+    predictions = gp.predict(analysis_points)
 
     # set up history matching
 
@@ -131,9 +131,9 @@ if __name__ == "__main__":
 
     elif mood == "analysis":
         try:
-            analysis_points = int(sys.argv[2])
+            analysis_samples = int(sys.argv[2])
         except ValueError:
-            print("Error: number of analysis points must be an integer")
+            print("Error: number of analysis samples must be an integer")
             exit()
         try:
             known_value = float(sys.argv[3])
@@ -147,4 +147,4 @@ if __name__ == "__main__":
             exit()
         results_dir = sys.argv[5]
 
-        run_mogp_analysis(analysis_points, known_value, threshold, results_dir)
+        run_mogp_analysis(analysis_samples, known_value, threshold, results_dir)
