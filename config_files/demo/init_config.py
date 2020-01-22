@@ -64,7 +64,7 @@ def parse_options():
                       default=False)
     parser.add_option("--seed",
                       action="store",
-                      type=int
+                      type=int,
                       default=0)
 
     # Return three-tuple of parser + the output from parse_args (opt obj, args)
