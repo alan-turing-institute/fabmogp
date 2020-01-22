@@ -89,6 +89,28 @@ def run_mogp_analysis(analysis_points, known_value, threshold, results_dir):
 
     # make some plots
 
+    plt.figure()
+    plt.plot(analysis_points[NROY, 0], analysis_points[NROY, 1], 'o')
+    plt.xlabel('Normal Stress (MPa)')
+    plt.ylabel('Shear to Normal Stress Ratio')
+    plt.xlim((-120., -80.))
+    plt.ylim((0.1, 0.4))
+    plt.title("NROY Points")
+    plt.savefig("results/nroy.png")
+
+    import matplotlib.tri
+
+    plt.figure()
+    tri = matplotlib.tri.Triangulation(-(analysis_points[:,0]-80.)/40., (analysis_points[:,1]-0.1)/0.3)
+    plt.tripcolor(analysis_points[:,0], analysis_points[:,1], tri.triangles, implaus,
+                  vmin = 0., vmax = 6., cmap="viridis_r")
+    cb = plt.colorbar()
+    cb.set_label("Implausibility")
+    plt.xlabel('Normal Stress (MPa)')
+    plt.ylabel('Shear to Normal Stress Ratio')
+    plt.title("Implausibility Metric")
+    plt.savefig("results/implausibility.png")
+
 
 if __name__ == "__main__":
 
