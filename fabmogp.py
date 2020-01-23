@@ -13,7 +13,7 @@ add_local_paths("fabmogp")
 
 
 @task
-def mogp(config, **args):
+def mogp(config, seed=0, **args):
     """
     Submit a single mogp job to the remote queue.
     The job results will be stored with a name pattern as defined in the environment,
@@ -24,11 +24,13 @@ def mogp(config, **args):
     env.mood = "run_simulation"
     if (hasattr(env, 'sample_points') == False):
         env.sample_points = 1
+    env.seed = seed
 
     from .init_config import mogp_configuration_initialization
     mogp_configuration_initialization(env.sample_points,
                                       env.job_config_path_local,
-                                      False)
+                                      False,
+                                      env.seed)
 
     execute(put_configs, config)
 
@@ -36,7 +38,7 @@ def mogp(config, **args):
 
 
 @task
-def mogp_ensemble(config, sample_points=1, script='mogp', **args):
+def mogp_ensemble(config, sample_points=1, seed=0, script='mogp', **args):
     """
     Submits an ensemble of mogp jobs.
     One job is run for each file in <config_file_directory>/SWEEP.
@@ -48,6 +50,7 @@ def mogp_ensemble(config, sample_points=1, script='mogp', **args):
     sweep_dir = path_to_config + "/SWEEP"
     env.script = script
     env.sample_points = sample_points
+    env.seed = seed
     env.mood = "run_simulation"
 
     # clean SWEEP directory
@@ -60,13 +63,13 @@ def mogp_ensemble(config, sample_points=1, script='mogp', **args):
     from .init_config import mogp_configuration_initialization
     mogp_configuration_initialization(env.sample_points,
                                       env.job_config_path_local,
-                                      False)
+                                      False, env.seed)
 
     run_ensemble(config, sweep_dir, **args)
 
 
 @task
-def mogp_analysis(config, results_dir):
+def mogp_analysis(config, results_dir, analysis_points=10000, known_value=58., threshold=3.):
     """
     run : fab localhost mogp_analysis:demo,demo_localhost_16
 
@@ -75,6 +78,10 @@ def mogp_analysis(config, results_dir):
     """
     with_config(config)
     env.mood = "run_simulation"
+    env.analysis_points = analysis_points
+    env.known_value = known_value
+    env.threshold = threshold
 
-    from .run import run_mogp_analysis
-    run_mogp_analysis(env.mpi_exec, env.fdfault_exec, "{}/{}".format(env.local_results,results_dir))
+    from .mogp_functions import run_mogp_analysis
+    run_mogp_analysis(env.mpi_exec, env.fdfault_exec, env.analysis_points, env.known_value,
+           env.threshold, "{}/{}".format(env.local_results,results_dir))
