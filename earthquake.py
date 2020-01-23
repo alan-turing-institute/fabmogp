@@ -2,7 +2,7 @@ from os.path import join
 import fdfault
 import fdfault.analysis
 import numpy as np
-from .utils import generate_profile, generate_normals_2d, rotate_xy2nt_2d
+from utils import generate_profile, generate_normals_2d, rotate_xy2nt_2d
 import subprocess
 from scipy.integrate import simps
 
