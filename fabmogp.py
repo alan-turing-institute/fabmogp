@@ -26,12 +26,12 @@ def mogp(config, seed=0, **args):
         env.sample_points = 1
     env.seed = seed
 
-    local("python3 %s/init_config.py --sample_points %s --results_dir %s --seed %s" %
-          (env.job_config_path_local,
-           env.sample_points,
-           env.job_config_path_local,
-           env.seed)
-          )
+    from .init_config import mogp_configuration_initialization
+    mogp_configuration_initialization(env.sample_points,
+                                      env.job_config_path_local,
+                                      False,
+                                      env.seed)
+
     execute(put_configs, config)
 
     job(dict(script='mogp'), args)
@@ -60,12 +60,10 @@ def mogp_ensemble(config, sample_points=1, seed=0, script='mogp', **args):
         folder_name = "sample_point_" + str(i)
         local("mkdir -p %s/%s" % (sweep_dir, folder_name))
 
-    local("python3 %s/init_config.py --sample_points %s --results_dir %s --isSWEEP True --seed %s" %
-          (env.job_config_path_local,
-           env.sample_points,
-           env.job_config_path_local,
-           env.seed)
-          )
+    from .init_config import mogp_configuration_initialization
+    mogp_configuration_initialization(env.sample_points,
+                                      env.job_config_path_local,
+                                      False, env.seed)
 
     run_ensemble(config, sweep_dir, **args)
 
@@ -84,8 +82,6 @@ def mogp_analysis(config, results_dir, analysis_points=10000, known_value=58., t
     env.known_value = known_value
     env.threshold = threshold
 
-    local("python3 %s/mogp_functions.py analysis %s  %s  %s %s/%s " %
-          (env.job_config_path_local,
-           env.analysis_points, env.known_value,
-           env.threshold,
-           env.local_results, results_dir))
+    from .mogp_functions import run_mogp_analysis
+    run_mogp_analysis(env.mpi_exec, env.fdfault_exec, env.analysis_points, env.known_value,
+           env.threshold, "{}/{}".format(env.local_results,results_dir))
