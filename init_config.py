@@ -12,13 +12,17 @@ except ModuleNotFoundError:
 
 def mogp_configuration_initialization(sample_points,
                                       results_dir,
-                                      isSWEEP):
+                                      isSWEEP, seed=0):
 
     ed = mogp_emulator.LatinHypercubeDesign(
         [(-120., -80.), (0.1, 0.4), (0.9, 1.1)])
 
     # We can now generate a design of sample_points by calling the sample
-    np.random.seed(157374)
+
+    if seed == 0:
+        seed = None
+
+    np.random.seed(seed)
     input_points = ed.sample(sample_points)
 
     if isSWEEP == False:
@@ -58,6 +62,10 @@ def parse_options():
     parser.add_option("--isSWEEP",
                       action="store_true",
                       default=False)
+    parser.add_option("--seed",
+                      action="store",
+                      type=int,
+                      default=0)
 
     # Return three-tuple of parser + the output from parse_args (opt obj, args)
     options, args = parser.parse_args()
@@ -70,4 +78,5 @@ if __name__ == "__main__":
 
     mogp_configuration_initialization(options.sample_points,
                                       options.results_dir,
-                                      options.isSWEEP)
+                                      options.isSWEEP,
+                                      options.seed)
