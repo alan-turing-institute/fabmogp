@@ -69,7 +69,11 @@ def mogp_ensemble(config, sample_points=1, seed=0, script='mogp', **args):
 
 
 @task
-def mogp_analysis(config, results_dir, analysis_points=10000, known_value=58., threshold=3.):
+def mogp_analysis(config,
+                  results_dir,
+                  analysis_points=10000,
+                  known_value=58.,
+                  threshold=3.):
     """
     run : fabsim localhost mogp_analysis:demo,demo_localhost_16
 
@@ -83,5 +87,8 @@ def mogp_analysis(config, results_dir, analysis_points=10000, known_value=58., t
     env.threshold = threshold
 
     from .mogp_functions import run_mogp_analysis
-    run_mogp_analysis(env.mpi_exec, env.fdfault_exec, env.analysis_points, env.known_value,
-                      env.threshold, "{}/{}".format(env.local_results, results_dir))
+    run_mogp_analysis(env.analysis_points,
+                      env.known_value,
+                      env.threshold,
+                      "{}/{}".format(env.local_results, results_dir)
+                      )
