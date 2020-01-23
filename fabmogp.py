@@ -60,8 +60,8 @@ def mogp_ensemble(config, sample_points=1, seed=0, script='mogp', **args):
         folder_name = "sample_point_" + str(i)
         local("mkdir -p %s/%s" % (sweep_dir, folder_name))
 
-    from .init_config import mogp_configuration_initialization
-    mogp_configuration_initialization(env.sample_points,
+        from .init_config import mogp_configuration_initialization
+        mogp_configuration_initialization(env.sample_points,
                                       env.job_config_path_local,
                                       False, env.seed)
 
