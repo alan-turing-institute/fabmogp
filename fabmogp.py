@@ -17,7 +17,7 @@ def mogp(config, seed=0, **args):
     """
     Submit a single mogp job to the remote queue.
     The job results will be stored with a name pattern as defined in the environment,
-    run : fab localhost mogp:demo
+    run : fabsim localhost mogp:demo
     """
     update_environment(args)
     with_config(config)
@@ -42,7 +42,7 @@ def mogp_ensemble(config, sample_points=1, seed=0, script='mogp', **args):
     """
     Submits an ensemble of mogp jobs.
     One job is run for each file in <config_file_directory>/SWEEP.
-    run : fab localhost mogp_ensemble:demo,sample_points=5
+    run : fabsim localhost mogp_ensemble:demo,sample_points=5
     """
     update_environment(args)
     with_config(config)
@@ -71,7 +71,7 @@ def mogp_ensemble(config, sample_points=1, seed=0, script='mogp', **args):
 @task
 def mogp_analysis(config, results_dir, analysis_points=10000, known_value=58., threshold=3.):
     """
-    run : fab localhost mogp_analysis:demo,demo_localhost_16
+    run : fabsim localhost mogp_analysis:demo,demo_localhost_16
 
     make sure that you already fetch the results:
                         fab localhost fetch_results
