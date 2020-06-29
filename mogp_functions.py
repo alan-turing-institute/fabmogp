@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import mogp_emulator
-from .earthquake import create_problem, run_simulation, compute_moment
+from earthquake import create_problem, run_simulation, compute_moment
 import sys
 from pprint import pprint
 from os.path import join, dirname, exists
