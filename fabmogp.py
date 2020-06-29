@@ -24,7 +24,7 @@ def mogp(config, seed=0, **args):
     env.mood = "run_simulation"
     if (hasattr(env, 'sample_points') == False):
         env.sample_points = 1
-    env.seed = seed
+    env.seed = int(seed)
 
     from .init_config import mogp_configuration_initialization
     mogp_configuration_initialization(env.sample_points,
