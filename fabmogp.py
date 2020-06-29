@@ -50,7 +50,7 @@ def mogp_ensemble(config, sample_points=1, seed=0, script='mogp', **args):
     sweep_dir = path_to_config + "/SWEEP"
     env.script = script
     env.sample_points = sample_points
-    env.seed = seed
+    env.seed = int(seed)
     env.mood = "run_simulation"
 
     # clean SWEEP directory
