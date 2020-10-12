@@ -7,7 +7,7 @@ This is a mogp (Multi-Output Gaussian Process Emulator) plugin for [FabSim3](htt
 A detailed tutorial has been written describing the computations carried out
 by this plugin. We also provide a docker image with all required software
 pre-installed to improve accessibility to the tutorial for novice users.
-For more details, see the (VECMA Workshop Tutorial)[https://github.com/alan-turing-institute/vecma_workshop_tutorial]. 
+For more details, see the [VECMA Workshop Tutorial](https://github.com/alan-turing-institute/vecma_workshop_tutorial). 
 
 ## Dependencies:
 
