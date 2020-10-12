@@ -2,7 +2,7 @@ from os.path import join
 import fdfault
 import fdfault.analysis
 import numpy as np
-from .utils import generate_profile, generate_normals_2d, rotate_xy2nt_2d
+from utils import generate_profile, generate_normals_2d, rotate_xy2nt_2d
 import subprocess
 from scipy.integrate import simps
 
@@ -10,7 +10,7 @@ from scipy.integrate import simps
 def create_problem(arg, name="rough_example",
                    outname="ufault",
                    refine=1,
-                   output_dir=""):
+                   output_dir="", vy_snapshot=False):
     """
     Create demo problem
 
@@ -118,8 +118,11 @@ def create_problem(arg, name="rough_example",
 
     # add output unit
     p.set_datadir(join(output_dir, "data"))
-    p.add_output(fdfault.output(outname, 'U', nt, nt,
-                                1, 0, nx - 1, 1, ny, ny, 1, 0, 0, 1))
+    if vy_snapshot:
+        p.add_output(fdfault.output("vybody", "vy", (nt - 1)*3//4, (nt - 1)*3//4, 1,
+                                    0, nx - 1, 1, 0, 2*ny - 1, 1, 0, 0, 1))
+    p.add_output(fdfault.output(outname, 'U', nt, nt, 1,
+                                0, nx - 1, 1, ny, ny, 1, 0, 0, 1))
 
     p.write_input(directory=join(output_dir, "problems"))
 

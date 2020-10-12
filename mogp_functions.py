@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import mogp_emulator
-from .earthquake import create_problem, run_simulation, compute_moment
+from earthquake import create_problem, run_simulation, compute_moment
 import sys
 from pprint import pprint
 from os.path import join, dirname, exists
@@ -71,7 +71,7 @@ def run_mogp_analysis(analysis_points, known_value, threshold, results_dir):
     # fit GP to simulations
 
     gp = mogp_emulator.GaussianProcess(input_points, results)
-    gp.learn_hyperparameters()
+    gp = mogp_emulator.fit_GP_MAP(gp)
 
     # We can now make predictions for a large number of input points much
     # more quickly than running the simulation.
