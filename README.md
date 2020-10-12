@@ -1,14 +1,22 @@
 # fabmogp
+
 This is a mogp (Multi-Output Gaussian Process Emulator) plugin for [FabSim3](https://github.com/djgroen/FabSim3.git).
+
+## Tutorial
+
+A detailed tutorial has been written describing the computations carried out
+by this plugin. We also provide a docker image with all required software
+pre-installed to improve accessibility to the tutorial for novice users.
+For more details, see the [VECMA Workshop Tutorial](https://github.com/alan-turing-institute/vecma_workshop_tutorial). 
 
 ## Dependencies:
 
-[mogp_emulator](https://www.github.com/alan-turing-institute/mogp_emulator)
-
-[fdfault](https://www.github.com/egdaub/fdfault)
-
+* [mogp_emulator](https://www.github.com/alan-turing-institute/mogp_emulator)
+* [FabSim3](https://github.com/djgroen/FabSim3)
+* [fdfault](https://www.github.com/egdaub/fdfault)
 
 ## Installation
+
 Simply type `fab localhost install_plugin:fabmogp` anywhere inside your FabSim3 install directory.
 
 ### FabSim3 Configuration
