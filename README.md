@@ -11,9 +11,9 @@ For more details, see the [VECMA Workshop Tutorial](https://github.com/alan-turi
 
 ## Dependencies:
 
-* [mogp_emulator](https://www.github.com/alan-turing-institute/mogp_emulator)
+* [mogp_emulator](https://www.github.com/alan-turing-institute/mogp-emulator)
 * [FabSim3](https://github.com/djgroen/FabSim3)
-* [fdfault](https://www.github.com/egdaub/fdfault)
+* [fdfault](https://www.github.com/edaub/fdfault)
 
 ## Installation
 
