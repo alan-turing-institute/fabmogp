@@ -5,7 +5,11 @@
 #
 # This file contains FabSim definitions specific to fabmogp.
 
-from base.fab import *
+try:
+    from fabsim.base.fab import *
+except ImportError:
+    from base.fab import *
+
 from pprint import pprint
 
 # Add local script, blackbox and template path.
