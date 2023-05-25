@@ -15,20 +15,22 @@ For more details, see the [VECMA Workshop Tutorial](https://github.com/alan-turi
 * [FabSim3](https://github.com/djgroen/FabSim3)
 * [fdfault](https://www.github.com/edaub/fdfault)
 
+Note: Please follow the instructions in fdfault repository to create the fdfault executable and soft links.
+
 ## Installation
 
-Simply type `fab localhost install_plugin:fabmogp` anywhere inside your FabSim3 install directory.
+Simply type `fabsim localhost install_plugin:fabmogp` anywhere inside your FabSim3 install directory.
 
 ### FabSim3 Configuration
 Once you have installed the required dependencies, you will need to take a few small configuration steps:
 1. Go to `(FabSim Home)/deploy`
 2. Open `machines_user.yml`
 3. Under the section `default:`, please add the following lines:
-   <br/> a. `  mpi_exec=(mpiexec_file_path)`
-   <br/> _NOTE: you can find it in your local machine by running `which mpiexec` 
-   <br/> Please replace `mpiexec_file_path` with your actual install path file._
-   <br/> b. `  fdfault_exec=(fdfault Home)`
-   <br/> _NOTE: Please replace (fdfault Home) with your actual install directory._
+   <br/> a. `  mpi_exec: "mpiexec_file_path"`
+   <br/> _NOTE: Please include mpiexec in mpi_file_path. 
+   <br/> _Use `which mpiexec` to find the location of mpiexec in your machine (e.g., "/usr/bin/mpiexec")
+   <br/> b. `  fdfault_exec: "fdfault_home"`
+   <br/> _NOTE: Please replace fdfault_home with your actual fdfault install directory._
   
 ## Testing
 
@@ -38,6 +40,7 @@ Once you have installed the required dependencies, you will need to take a few s
    <br/> `fabsim localhost mogp_ensemble:demo,sample_points=20`
 3. You can copy back any results from completed runs using:
    <br/> `fabsim localhost fetch_results`
-   <br/> The results will then be in a directory inside `(FabSim3 Home)/results`, which is most likely called `demo_localhost_16`
-4. You can analysis the simulation output using:
+   <br/> The results will then be in a directory inside `FabSim3/results` directory, which is most likely called `demo_localhost_16`
+4. You can analyse the simulation output using:
    <br/> `fabsim localhost mogp_analysis:demo,demo_localhost_16`
+   Figures are stored in `FabSim3/results/demo_localhost_16/results`
