@@ -135,9 +135,9 @@ def run_simulation(name="rough_example",
     """
     launches problem with specified number of processes
     """
-    subprocess.run([mpi_exec, "--allow-run-as-root", "-n", str(int(n_proc)),
-                    "fdfault", output_dir + "/problems/" + name + ".in"],
-                   cwd=fdfault_exec)
+    subprocess.run([mpi_exec, "-n", str(int(n_proc)),
+                join(fdfault_exec, "fdfault"), output_dir + "/problems/" + name + ".in"],
+               cwd=fdfault_exec)
 
 
 def compute_moment(name="rough_example",

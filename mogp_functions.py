@@ -96,7 +96,8 @@ def run_mogp_analysis(analysis_points, known_value, threshold, results_dir):
     plt.xlim((-120., -80.))
     plt.ylim((0.1, 0.4))
     plt.title("NROY Points")
-    plt.savefig("results/nroy.png")
+    makedirs(join(results_dir, "results"), exist_ok=True)
+    plt.savefig(join(results_dir, "results", "nroy.png"))
 
     import matplotlib.tri
 
@@ -109,7 +110,8 @@ def run_mogp_analysis(analysis_points, known_value, threshold, results_dir):
     plt.xlabel('Normal Stress (MPa)')
     plt.ylabel('Shear to Normal Stress Ratio')
     plt.title("Implausibility Metric")
-    plt.savefig("results/implausibility.png")
+    makedirs(join(results_dir, "results"), exist_ok=True)
+    plt.savefig(join(results_dir, "results", "implausibility.png"))
 
 
 if __name__ == "__main__":

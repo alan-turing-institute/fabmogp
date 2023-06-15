@@ -64,20 +64,20 @@ def load_results(results_dir):
 
     return input_points, results, ed
 
-def run_mogp_analysis(analysis_samples, known_value, threshold, results_dir):
+def run_mogp_analysis(analysis_points, known_value, threshold, results_dir):
 
     input_points, results, ed = load_results(results_dir)
 
     # fit GP to simulations
 
     gp = mogp_emulator.GaussianProcess(input_points, results)
-    gp.learn_hyperparameters()
+    gp = mogp_emulator.fit_GP_MAP(gp)
 
     # We can now make predictions for a large number of input points much
     # more quickly than running the simulation.
 
-    analysis_points = ed.sample(analysis_samples)
-    predictions = gp.predict(analysis_points)
+    query_points = ed.sample(analysis_points)
+    predictions = gp.predict(query_points)
 
     # set up history matching
 
@@ -90,26 +90,28 @@ def run_mogp_analysis(analysis_samples, known_value, threshold, results_dir):
     # make some plots
 
     plt.figure()
-    plt.plot(analysis_points[NROY, 0], analysis_points[NROY, 1], 'o')
+    plt.plot(query_points[NROY, 0], query_points[NROY, 1], 'o')
     plt.xlabel('Normal Stress (MPa)')
     plt.ylabel('Shear to Normal Stress Ratio')
     plt.xlim((-120., -80.))
     plt.ylim((0.1, 0.4))
     plt.title("NROY Points")
-    plt.savefig("results/nroy.png")
+    makedirs(join(results_dir, "results"), exist_ok=True)
+    plt.savefig(join(results_dir, "results", "nroy.png"))
 
     import matplotlib.tri
 
     plt.figure()
-    tri = matplotlib.tri.Triangulation(-(analysis_points[:,0]-80.)/40., (analysis_points[:,1]-0.1)/0.3)
-    plt.tripcolor(analysis_points[:,0], analysis_points[:,1], tri.triangles, implaus,
+    tri = matplotlib.tri.Triangulation(-(query_points[:,0]-80.)/40., (query_points[:,1]-0.1)/0.3)
+    plt.tripcolor(query_points[:,0], query_points[:,1], tri.triangles, implaus,
                   vmin = 0., vmax = 6., cmap="viridis_r")
     cb = plt.colorbar()
     cb.set_label("Implausibility")
     plt.xlabel('Normal Stress (MPa)')
     plt.ylabel('Shear to Normal Stress Ratio')
     plt.title("Implausibility Metric")
-    plt.savefig("results/implausibility.png")
+    makedirs(join(results_dir, "results"), exist_ok=True)
+    plt.savefig(join(results_dir, "results", "implausibility.png"))
 
 
 if __name__ == "__main__":
@@ -131,9 +133,9 @@ if __name__ == "__main__":
 
     elif mood == "analysis":
         try:
-            analysis_samples = int(sys.argv[2])
+            analysis_points = int(sys.argv[2])
         except ValueError:
-            print("Error: number of analysis samples must be an integer")
+            print("Error: number of analysis points must be an integer")
             exit()
         try:
             known_value = float(sys.argv[3])
@@ -147,4 +149,4 @@ if __name__ == "__main__":
             exit()
         results_dir = sys.argv[5]
 
-        run_mogp_analysis(analysis_samples, known_value, threshold, results_dir)
+        run_mogp_analysis(analysis_points, known_value, threshold, results_dir)
